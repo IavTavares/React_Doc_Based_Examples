@@ -8,7 +8,7 @@
     class Form extends React.Component {
         constructor(props) {
             super(props);
-            this.state = {n_pressed: 0};
+            this.state = {n_pressed_1: 0,n_pressed_2: 0};
             // This binding is necessary to make `this` work in the callback
             this.handleSubmit = this.handleSubmit.bind(this);
         }
@@ -18,20 +18,41 @@
             this.setState(
                 function(state, props) {
                     return{
-                            n_pressed: state.n_pressed + 1
+                            n_pressed_1: state.n_pressed_1 + 1
+                    };
+                }
+            );
+        }
+        handleSubmit_2 = (e) => {
+            e.preventDefault();
+            console.log('You clicked submit.');
+            this.setState(
+                function(state, props) {
+                    return{
+                            n_pressed_2: state.n_pressed_2 + 1
                     };
                 }
             );
         }     
+
+
         render(){
             return (
             <div> 
                 {/* Without the binding in the constructor class callback
                     below won't work */} 
                 <form onSubmit={this.handleSubmit}>
-                    <button type="submit">Submit</button>
+                    <button type="submit">Submit Button 1</button>
                 </form>
-                <h2> You've pressed this button {this.state.n_pressed} times.</h2>
+                <h2> You've pressed this button {this.state.n_pressed_1} times.</h2>
+                <hr></hr>
+                {/* no need for binding in the constructor class callback,
+                    since we used = (class public field notation)*/} 
+                <form onSubmit={this.handleSubmit_2}>
+                    <button type="submit">Submit Button 2</button>
+                </form>
+                <h2> You've pressed this button {this.state.n_pressed_2} times.</h2>
+
             </div>
             );
         }
