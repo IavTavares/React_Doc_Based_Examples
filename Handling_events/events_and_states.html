@@ -1,0 +1,40 @@
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+    class Form extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {n_pressed: 0};
+            // This binding is necessary to make `this` work in the callback
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+        handleSubmit(e) {
+            e.preventDefault();
+            console.log('You clicked submit.');
+            this.setState(
+                function(state, props) {
+                    return{
+                            n_pressed: state.n_pressed + 1
+                    };
+                }
+            );
+        }     
+        render(){
+            return (
+            <div> 
+                {/* Without the binding in the constructor class callback
+                    below won't work */} 
+                <form onSubmit={this.handleSubmit}>
+                    <button type="submit">Submit</button>
+                </form>
+                <h2> You've pressed this button {this.state.n_pressed} times.</h2>
+            </div>
+            );
+        }
+    }
+    root.render(<Form  />)
+</script>
