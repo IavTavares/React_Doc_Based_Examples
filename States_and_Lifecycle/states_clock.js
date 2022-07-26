@@ -25,7 +25,13 @@ class Clock extends React.Component {
       clearInterval(this.timerID);
     }
     tick(){
-      // this.setState({date: new Date(), elapsed_time: time_gone+1});
+      // React may batch multiple setState() calls into a single update for 
+      // performance.Because this.props and this.state may be updated asynchronously, 
+      // you should not rely on their values for calculating the next state.
+      // use a form of setState() that accepts a function rather than an 
+      // object. That function will receive the previous state as the first argument, 
+      // and the props at the time the update is applied as the second argument.
+
       this.setState(function(state, props) {
         return {
           date: new Date(),
@@ -50,7 +56,7 @@ class Clock extends React.Component {
         // JS below
         return e('div', null, e("h1", null, "Hello, world!"),
                               e("h2", null, "It is ", this.state.date.toLocaleTimeString(), "."),
-                              e("h2", null, "Time elapsed since loading webpage: ", this.state.elapsed_time,".")
+                              e("h2", null, "Time elapsed since loading webpage: ", this.state.elapsed_time," seconds.")
                     );
     };
 }
