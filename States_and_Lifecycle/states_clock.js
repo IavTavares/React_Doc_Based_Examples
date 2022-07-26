@@ -45,11 +45,6 @@ class Clock extends React.Component {
     };
 }
 
-function tick() {
-//   root.render(<Clock date={new Date()} />);
-  root.render(e(Clock, null, null))
-}
-
-setInterval(tick, 1000);
+root.render(e(Clock, null, null))
 
 
