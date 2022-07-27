@@ -1,0 +1,48 @@
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+
+
+    function Blog(props) {
+        const sidebar = (
+            <ul>
+            {props.posts.map((post) =>
+                <li key={post.id}>
+                {post.title}
+                </li>
+            )}
+            </ul>
+        );
+        // Keys used within arrays should be unique among their siblings. 
+        // However, they don’t need to be globally unique. We can use the same keys 
+        // when we produce two different arrays.
+
+
+        const content = props.posts.map((post) =>
+            <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+            </div>
+        );
+        return (
+            <div>
+            {sidebar}
+            <hr />
+            {content}
+            </div>
+        );
+    }
+
+    const posts = [
+    {id: 1, title: 'Hello World', content: 'Welcome to learning React!'},
+    {id: 2, title: 'Installation', content: 'You can install React from npm.'}
+    ];
+    root.render(<Blog posts ={posts} />);
+
+</script>
