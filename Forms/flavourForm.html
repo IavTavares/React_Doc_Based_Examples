@@ -1,0 +1,65 @@
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+
+    function openInNewTab(url){
+                window.open(url);
+            };
+
+    class FlavourForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.flavours = props.flavours;
+            this.state = {value: this.flavours[2].name, url: this.flavours[2].url};
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+
+        handleChange(event) {
+            this.setState(
+                {
+                    value: event.target.value,
+                    url: event.target.url,
+                }
+            );
+        }
+
+        handleSubmit(event) {
+            alert('Your favorite flavor is: ' + this.state.value);
+            openInNewTab(this.state.url)
+            event.preventDefault();
+        }
+
+        render() {
+            const drop_down_options= this.flavours.map(
+                (flavour)=>(
+                    <option value = {flavour.name} url = {flavour.url}>{flavour.name}</option>
+                )
+            )
+            return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                Pick your favorite flavor:
+                <select value={this.state.value} onChange={this.handleChange}>
+                    {drop_down_options}  
+                </select>
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+            );
+        }
+    }
+    const flavours = [
+        {id: 1, name: 'Grapefruit', url: 'https://en.wikipedia.org/wiki/Grapefruit'},
+        {id: 2, name: 'Lime', url: 'https://en.wikipedia.org/wiki/Lime_(fruit)'},
+        {id: 3, name: 'Coconut', url: 'https://en.wikipedia.org/wiki/Coconut'},
+        {id: 4, name: 'Mango', url: 'https://en.wikipedia.org/wiki/Mango'},
+        {id: 5, name: 'Passionfruit', url: 'https://en.wikipedia.org/wiki/Passion_fruit_(fruit)'},
+    ];
+    root.render(<FlavourForm flavours = {flavours}/>)
+</script>
