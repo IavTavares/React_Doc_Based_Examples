@@ -1,0 +1,50 @@
+
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+    class EssayForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                value: 'Please write an essay about your favorite DOM element.'
+            };
+        
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+        }
+    
+        handleChange(event) {
+            this.setState((state,props) => (
+                {value : event.target.value}
+                ));
+            console.log("event.target.value: " + event.target.value);
+            console.log("this.state.value: " + this.state.value);
+        }
+        
+        handleSubmit(event) {
+            alert('An essay was submitted: ' + this.state.value);
+            event.preventDefault();
+        }
+    
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                <label>
+                    <p>Essay:</p>
+                </label>
+                <textarea rows="4" cols="50" placeholder={this.state.value} onChange={this.handleChange} />
+                <br></br>
+                <input type="submit" value="Submit" />
+                </form>
+            );
+        }
+    }
+
+    root.render(<EssayForm />)
+</script>
