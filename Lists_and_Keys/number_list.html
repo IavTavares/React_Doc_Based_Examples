@@ -1,0 +1,31 @@
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+
+    function ListItem(props) {
+    // No need to specify the key here:
+        return <li>{props.value} and props.id = {props.id}</li>;
+    }
+
+    function NumberList(props) {
+        const numbers = props.numbers;
+        const listItems = numbers.map((number) =>
+            <ListItem key={number.toString()} id = {number.toString()} value = {number}/>
+        );
+        // Keys serve as a hint to React but they don’t get passed to your components.
+        // If you need the same value in your component, pass it explicitly as 
+        // a prop with a different name. Here's were passing it as 'id' prop.
+        return (
+            <ul>{listItems}</ul>
+        );
+    }
+    const messages=["1st Message","2nd Message",3,4];
+    root.render(<NumberList numbers ={messages} />);
+
+</script>
