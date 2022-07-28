@@ -1,0 +1,76 @@
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<div id='root'></div>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+
+    const domContainer = document.getElementById('root');
+    const root = ReactDOM.createRoot(domContainer);
+
+    function toCelsius(fahrenheit) {
+      return (fahrenheit - 32) * 5 / 9;
+    }
+
+    function BoilingVerdict(props){
+      let temperature = parseFloat(props.temperature);
+      if (props.scale === "Fahrenheit"){
+        temperature = toCelsius(temperature);
+      }
+      if (!isNaN(temperature)){
+        if (temperature >= 100) {
+          return <p>The water would boil.</p>;
+        }
+        return <p>The water would not boil.</p>;
+      }else{
+        return <p>Please insert a temperature (data type: float).</p>;
+      } 
+    }
+
+
+    class Calculator extends React.Component {
+      constructor(props){
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChange_scale = this.handleChange_scale.bind(this);
+        this.state = {temperature: '',scale:""};
+      }
+
+      handleChange(e) {
+        this.setState({temperature: e.target.value});
+      }
+      handleChange_scale(e) {
+        console.log("Scale " + e.target.value)
+        this.setState({scale: e.target.value});
+        console.log("Scale has been set")
+      }
+
+      render() {
+        let temperature = this.state.temperature;
+        const scale = this.state.scale;
+        return (
+          <fieldset>
+            <legend>
+              Please select your temperature scale:
+            </legend>
+            <div onChange={this.handleChange_scale}>
+              <input type="radio" name="scale" id="Celsius" value="Celsius" defaultChecked/>
+              <label>Celsius</label> <br></br>
+              <input type="radio" name="scale" id="Fahrenheit" value="Fahrenheit"/>
+              <label>Fahrenheit</label>
+            </div>
+            <input
+              value={temperature}
+              onChange={this.handleChange} 
+            />
+            <BoilingVerdict
+              temperature={temperature}
+              scale = {scale}
+              // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
+            />
+          </fieldset>
+        );
+      }
+    }
+    root.render(<Calculator />)
+</script>
